@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb27b13df5d62a40b1ab5f1036711b0, type: 3}
+  m_Name: letter-tracer-module
+  m_EditorClassIdentifier: 
+  moduleName: Letter Tracer
+  sections:
+  - {fileID: 11400000, guid: 2bb819f426f6ddf4aa56771cf95060df, type: 2}
+  - {fileID: 11400000, guid: 04720757cd8f1314aacf77fdb3b6016a, type: 2}
+  - {fileID: 11400000, guid: ecb415a9097bd8b429af1bd4fcf730d1, type: 2}
+  - {fileID: 11400000, guid: cd446c3ec526029488641fa5b05ef625, type: 2}
+  currentSection: 4

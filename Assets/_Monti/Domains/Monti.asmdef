@@ -1,0 +1,20 @@
+{
+    "name": "Monti",
+    "rootNamespace": "Monti",
+    "references": [
+        "GUID:8e41755d2f929b14e9ddfacc3292862f",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:f0e75a0aaa537a0489b2770c44ede705",
+        "GUID:807fbc746b806ce438453140547c8324",
+        "GUID:adbf05efed1bd7a48a0ae7d4ca1ed3e5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
