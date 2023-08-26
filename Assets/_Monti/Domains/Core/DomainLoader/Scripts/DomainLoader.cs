@@ -60,7 +60,7 @@ namespace Monti
             }
         }
 
-        private void InstanceDomain(string name)
+        void InstanceDomain(string name)
         {
             GameObject newDomainObject = Instantiate(domains.GetDomainPrefab(name));
             currentDomain = newDomainObject.GetComponent<AppDomain>();
@@ -72,7 +72,7 @@ namespace Monti
             });
         }
 
-        private void Update()
+        void Update()
         {
             if (rotate)
             {
