@@ -29,61 +29,61 @@ namespace Monti
         [SerializeField] Button replayButton = null;
         [SerializeField] Button nextButton = null;
 
-        private int currentSection = 0;
-        private int currentTrivia = 0;
-        private float timer = 0;
-        private bool isEnabled = false;
+        int currentSection = 0;
+        int currentTrivia = 0;
+        float timer = 0;
+        bool isEnabled = false;
 
         public override void PrepareForLoad(Action success = null, Action fail = null)
         {
-            currentSection = domainData.module.currentSection;
-            LetterTracer.OnGestureRecognized += HandleOnGestureRecognized;
-            foreach (Button GoBackButton in GoBackButtons)
-            {
-                GoBackButton.onClick.AddListener(() =>
-            {
-                DomainLoader.instance.SwitchDomain("main-menu-domain");
-            });
-
-            }
-            playButton.onClick.AddListener(() =>
-            {
-                if (currentSection == domainData.module.currentSection && currentSection != 0)
-                    currentSection--;
-                interactionPanel.gameObject.SetActive(true);
-                stagePanel.gameObject.SetActive(false);
-                drawLinesOnTexture.StartSection(domainData.module.sections[currentSection]);
-                letterTracer.LoadTrainingSet(domainData.module.sections[currentSection]);
-                drawLinesOnTexture.PhaseOneDrawTexture();
-            });
-
-            resetButton.onClick.AddListener(() =>
-            {
-                currentSection = 0;
-                domainData.module.currentSection = 0;
-                foreach (Button button in sectionButtons)
-                {
-                    Destroy(button.gameObject);
-                }
-                SetupModuleWithSectionButtons();
-            });
-
-            replayButton.onClick.AddListener(() =>
-            {
-                currentSection--;
-                LoadInteraction();
-            });
-
-            nextButton.onClick.AddListener(() =>
-            {
-                LoadInteraction();
-            });
-            SetupModuleWithSectionButtons();
+            // currentSection = domainData.module.currentSection;
+            // LetterTracer.OnGestureRecognized += HandleOnGestureRecognized;
+            // foreach (Button GoBackButton in GoBackButtons)
+            // {
+            //     GoBackButton.onClick.AddListener(() =>
+            // {
+            //     DomainLoader.instance.SwitchDomain("main-menu-domain");
+            // });
+            //
+            // }
+            // playButton.onClick.AddListener(() =>
+            // {
+            //     if (currentSection == domainData.module.currentSection && currentSection != 0)
+            //         currentSection--;
+            //     interactionPanel.gameObject.SetActive(true);
+            //     stagePanel.gameObject.SetActive(false);
+            //     drawLinesOnTexture.StartSection(domainData.module.sections[currentSection]);
+            //     letterTracer.LoadTrainingSet(domainData.module.sections[currentSection]);
+            //     drawLinesOnTexture.PhaseOneDrawTexture();
+            // });
+            //
+            // resetButton.onClick.AddListener(() =>
+            // {
+            //     currentSection = 0;
+            //     domainData.module.currentSection = 0;
+            //     foreach (Button button in sectionButtons)
+            //     {
+            //         Destroy(button.gameObject);
+            //     }
+            //     SetupModuleWithSectionButtons();
+            // });
+            //
+            // replayButton.onClick.AddListener(() =>
+            // {
+            //     currentSection--;
+            //     LoadInteraction();
+            // });
+            //
+            // nextButton.onClick.AddListener(() =>
+            // {
+            //     LoadInteraction();
+            // });
+            // SetupModuleWithSectionButtons();
 
             success();
         }
 
-        private void LoadInteraction()
+        void LoadInteraction()
         {
             winPopUp.SetActive(false);
             drawLinesOnTexture.StartSection(domainData.module.sections[currentSection]);
@@ -136,44 +136,44 @@ namespace Monti
 
         }
 
-        private void HandleOnGestureRecognized(string gesture)
+        void HandleOnGestureRecognized(string gesture)
         {
-            if (drawLinesOnTexture.GetSelectedWordName().Equals(gesture))
-            {
-
-                if (currentTrivia == domainData.module.sections[currentSection].letters.Length - 1)
-                {
-                    if (currentSection == domainData.module.currentSection)
-                    {
-                        sectionButtons[domainData.module.currentSection].GetComponent<SectionButton>().SetCompleted(true);
-                        domainData.module.currentSection++;
-                    }
-                    currentSection++;
-
-                    if (currentSection == domainData.module.sections.Length)
-                    {
-                        nextButton.onClick.RemoveAllListeners();
-                        nextButton.gameObject.SetActive(false);
-                    }
-                    audioSource.PlayOneShot(winSound);
-                    winPopUp.SetActive(true);
-                    currentTrivia = 0;
-                    return;
-                }
-                audioSource.PlayOneShot(hitSound);
-                drawLinesOnTexture.NextLetter();
-                drawLinesOnTexture.PhaseOneDrawTexture();
-
-                currentTrivia++;
-            }
-            else
-            {
-                audioSource.PlayOneShot(missSound);
-                drawLinesOnTexture.SepatarateLetterData();
-            }
+            // if (drawLinesOnTexture.GetSelectedWordName().Equals(gesture))
+            // {
+            //
+            //     if (currentTrivia == domainData.module.sections[currentSection].letters.Length - 1)
+            //     {
+            //         if (currentSection == domainData.module.currentSection)
+            //         {
+            //             sectionButtons[domainData.module.currentSection].GetComponent<SectionButton>().SetCompleted(true);
+            //             domainData.module.currentSection++;
+            //         }
+            //         currentSection++;
+            //
+            //         if (currentSection == domainData.module.sections.Length)
+            //         {
+            //             nextButton.onClick.RemoveAllListeners();
+            //             nextButton.gameObject.SetActive(false);
+            //         }
+            //         audioSource.PlayOneShot(winSound);
+            //         winPopUp.SetActive(true);
+            //         currentTrivia = 0;
+            //         return;
+            //     }
+            //     audioSource.PlayOneShot(hitSound);
+            //     drawLinesOnTexture.NextLetter();
+            //     drawLinesOnTexture.PhaseOneDrawTexture();
+            //
+            //     currentTrivia++;
+            // }
+            // else
+            // {
+            //     audioSource.PlayOneShot(missSound);
+            //     drawLinesOnTexture.SepatarateLetterData();
+            // }
         }
 
-        private void Update()
+        void Update()
         {
             if (isEnabled)
             {
