@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,126 +7,146 @@ namespace Monti
 {
     public class LetterTracerDomain : AppDomain
     {
-        [SerializeField] DomainData domainData = null;
-        [SerializeField] Button sectionButtonOpenPrefab = null;
-        [SerializeField] LetterTracer letterTracer = null;
-        [SerializeField] DrawLinesOnTexture drawLinesOnTexture = null;
-        [SerializeField] Button playButton = null;
-        [SerializeField] AudioSource audioSource = null;
-        [SerializeField] AudioClip winSound = null;
-        [SerializeField] AudioClip hitSound = null;
-        [SerializeField] AudioClip missSound = null;
-        [SerializeField] Button[] GoBackButtons = null;
-        [SerializeField] Transform sectionContainer = null;
-        [SerializeField] List<Button> sectionButtons = new List<Button>();
-        [SerializeField] RectTransform interactionPanel = null;
-        [SerializeField] RectTransform stagePanel = null;
-        [SerializeField] Button resetButton = null;
+        [SerializeField, BoxGroup("Module Data")] Domain_So _domain = null;
 
-        [Header("Win Pop-up")]
-        [SerializeField] GameObject winPopUp = null;
-        [SerializeField] Button replayButton = null;
-        [SerializeField] Button nextButton = null;
+        [SerializeField] Button _goBackButton = null;
+        [SerializeField] Button _profileButton = null;
 
-        int currentSection = 0;
-        int currentTrivia = 0;
-        float timer = 0;
-        bool isEnabled = false;
+        [SerializeField, BoxGroup("Paint Panel")] GameObject _paintPanel = null;
+        [SerializeField, BoxGroup("Paint Panel")] Image _paintPanelImage = null;
+        [SerializeField, BoxGroup("Paint Panel")] Material _paintPanelMaterial = null;
+        
+        [SerializeField, BoxGroup("Saved Session Popup")] GameObject _savedSessionPopUp = null;
+        [SerializeField, BoxGroup("Saved Session Popup")] Button _continueButtonSession = null;
+        [SerializeField, BoxGroup("Saved Session Popup")] Button _restartButtonSession = null;
+        
+        [SerializeField, BoxGroup("Big Win Popup")] GameObject _winPopUp = null;
+        [SerializeField, BoxGroup("Big Win Popup")] Button _replayButtonWin = null;
+        [SerializeField, BoxGroup("Big Win Popup")] Button _nextButtonWin = null;
+        
+        [SerializeField, BoxGroup("Small Win Popup")] GameObject _winSmallPopUp = null;
+        [SerializeField, BoxGroup("Small Win Popup")] Button _replayButtonWinSmall = null;
+        [SerializeField, BoxGroup("Small Win Popup")] Button _nextButtonWinSmall = null;
+        
+        [SerializeField, BoxGroup("Lose Popup")] GameObject _losePopUp = null;
+        [SerializeField, BoxGroup("Lose Popup")] Button _replayButtonLose = null;
+        [SerializeField, BoxGroup("Lose Popup")] Button _mainMenuButtonLose = null;
+
+        string _painPanelMainMaterial_ID = "_MainTex";
+        string _painPanelMaskMaterial_ID = "_MaskTex";
+
+        int _currentSection = 0;
+        int _currentLetterIndex = 0;
+        float _timer = 0;
+        bool _isEnabled = false;
 
         public override void PrepareForLoad(Action success = null, Action fail = null)
         {
-            // currentSection = domainData.module.currentSection;
-            // LetterTracer.OnGestureRecognized += HandleOnGestureRecognized;
-            // foreach (Button GoBackButton in GoBackButtons)
-            // {
-            //     GoBackButton.onClick.AddListener(() =>
-            // {
-            //     DomainLoader.instance.SwitchDomain("main-menu-domain");
-            // });
-            //
-            // }
-            // playButton.onClick.AddListener(() =>
-            // {
-            //     if (currentSection == domainData.module.currentSection && currentSection != 0)
-            //         currentSection--;
-            //     interactionPanel.gameObject.SetActive(true);
-            //     stagePanel.gameObject.SetActive(false);
-            //     drawLinesOnTexture.StartSection(domainData.module.sections[currentSection]);
-            //     letterTracer.LoadTrainingSet(domainData.module.sections[currentSection]);
-            //     drawLinesOnTexture.PhaseOneDrawTexture();
-            // });
-            //
-            // resetButton.onClick.AddListener(() =>
-            // {
-            //     currentSection = 0;
-            //     domainData.module.currentSection = 0;
-            //     foreach (Button button in sectionButtons)
-            //     {
-            //         Destroy(button.gameObject);
-            //     }
-            //     SetupModuleWithSectionButtons();
-            // });
-            //
-            // replayButton.onClick.AddListener(() =>
-            // {
-            //     currentSection--;
-            //     LoadInteraction();
-            // });
-            //
-            // nextButton.onClick.AddListener(() =>
-            // {
-            //     LoadInteraction();
-            // });
-            // SetupModuleWithSectionButtons();
+            _paintPanel.SetActive(false);
+            _savedSessionPopUp.SetActive(false);
+            _winPopUp.SetActive(false);
+            _losePopUp.SetActive(false);
+            _winSmallPopUp.SetActive(false);
+            
+            // Add button listeners
+            _goBackButton.onClick.AddListener(
+                    () =>
+                    {
+                        DomainLoader.instance.SwitchDomain(_domain.ParentDomain.ReferenceName);
+                    });
+            
+            // Saved Session Popup
+            _continueButtonSession.onClick.AddListener(
+                    () =>
+                    {
+                        LoadSection(PlayerPrefs.GetInt(_domain.SectionIndexPlayerPrefKey));
+                    });
+            
+            _restartButtonSession.onClick.AddListener(
+                    () =>
+                    {
+                        LoadSection(0);
+                    });
+            
+            // Big Win Popup
+            _replayButtonWin.onClick.AddListener(
+                    () =>
+                    {
+                        
+                    });
+            
+            _nextButtonWin.onClick.AddListener(
+                    () =>
+                    {
+                        
+                    });
+            
+            // Small Win Popup
+            _replayButtonWinSmall.onClick.AddListener(
+                    () =>
+                    {
+                        
+                    });
+            
+            _nextButtonWinSmall.onClick.AddListener(
+                    () =>
+                    {
+                        
+                    });
+            
+            // Lose Popup
+            _replayButtonLose.onClick.AddListener(
+                    () =>
+                    {
+                        
+                    });
+            
+            _mainMenuButtonLose.onClick.AddListener(
+                    () =>
+                    {
+                        DomainLoader.instance.SwitchDomain(_domain.ParentDomain.ReferenceName);
+                    });
+            
+            /*
+             * 1. Find last section completed
+             * 2. Ask if you want to continue or start over
+             * 3. Load Section from PlayerPrefs and start from first index
+             */
+
+            int _savedSection = PlayerPrefs.GetInt(_domain.SectionIndexPlayerPrefKey, -1);
+
+            if(_savedSection != -1)
+            {
+                // Show saved session popup
+                _savedSessionPopUp.SetActive(true);
+            }
+            else
+            {
+                LoadSection(0);
+            }
 
             success();
         }
 
-        void LoadInteraction()
+        void LoadSection(int section)
         {
-            winPopUp.SetActive(false);
-            drawLinesOnTexture.StartSection(domainData.module.sections[currentSection]);
-            letterTracer.LoadTrainingSet(domainData.module.sections[currentSection]);
-            drawLinesOnTexture.PhaseOneDrawTexture();
-        }
-
-        public void SetupModuleWithSectionButtons()
-        {
-            for (int i = 0; i < domainData.module.sections.Length; i++)
-            {
-                GameObject b = Instantiate(sectionButtonOpenPrefab.gameObject, sectionContainer);
-                SectionButton bScript = b.GetComponent<SectionButton>();
-                bScript.SetSectionText($"{i + 1}");
-                if ((i + 1) > domainData.module.currentSection)
-                {
-                    bScript.SetInteractible(false);
-                    bScript.SetCompleted(false);
-                }
-                else
-                {
-                    bScript.SetInteractible(false);
-                    bScript.SetCompleted(true);
-                }
-                // bScript.GetButton().onClick.AddListener(() =>
-                // {
-
-                // });
-                sectionButtons.Add(bScript.GetButton());
-            }
+            _paintPanel.SetActive(true);
+            _currentLetterIndex = 0;
+            _currentSection = section;
+            _paintPanelMaterial = _paintPanelImage.material;
+            
+            Section_LetterTracer_So currentSection = (Section_LetterTracer_So)_domain.Sections[_currentSection];
+            
+            Letter_So letter = currentSection.Letters[0];
+            _paintPanelMaterial.SetTexture(_painPanelMainMaterial_ID, letter.Texture);
+            _paintPanelMaterial.SetTexture(_painPanelMainMaterial_ID, letter.TextureMask);
+            
+            PlayerPrefs.SetInt(_domain.SectionIndexPlayerPrefKey, _currentSection);
         }
 
         public override void PrepareForDestroy(Action success = null, Action fail = null)
         {
-            LetterTracer.OnGestureRecognized -= HandleOnGestureRecognized;
-            foreach (Button GoBackButton in GoBackButtons)
-            {
-                GoBackButton.onClick.RemoveAllListeners();
-            }
-            playButton.onClick.RemoveAllListeners();
-
-            replayButton.onClick.RemoveAllListeners();
-
-            nextButton.onClick.RemoveAllListeners();
+            
             success();
         }
 
@@ -138,46 +157,14 @@ namespace Monti
 
         void HandleOnGestureRecognized(string gesture)
         {
-            // if (drawLinesOnTexture.GetSelectedWordName().Equals(gesture))
-            // {
-            //
-            //     if (currentTrivia == domainData.module.sections[currentSection].letters.Length - 1)
-            //     {
-            //         if (currentSection == domainData.module.currentSection)
-            //         {
-            //             sectionButtons[domainData.module.currentSection].GetComponent<SectionButton>().SetCompleted(true);
-            //             domainData.module.currentSection++;
-            //         }
-            //         currentSection++;
-            //
-            //         if (currentSection == domainData.module.sections.Length)
-            //         {
-            //             nextButton.onClick.RemoveAllListeners();
-            //             nextButton.gameObject.SetActive(false);
-            //         }
-            //         audioSource.PlayOneShot(winSound);
-            //         winPopUp.SetActive(true);
-            //         currentTrivia = 0;
-            //         return;
-            //     }
-            //     audioSource.PlayOneShot(hitSound);
-            //     drawLinesOnTexture.NextLetter();
-            //     drawLinesOnTexture.PhaseOneDrawTexture();
-            //
-            //     currentTrivia++;
-            // }
-            // else
-            // {
-            //     audioSource.PlayOneShot(missSound);
-            //     drawLinesOnTexture.SepatarateLetterData();
-            // }
+            
         }
 
         void Update()
         {
-            if (isEnabled)
+            if (_isEnabled)
             {
-                timer += Time.deltaTime;
+                _timer += Time.deltaTime;
             }
         }
     }

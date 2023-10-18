@@ -38,10 +38,7 @@ namespace Monti
         GameObject _modulesPanel = null;
 
         [SerializeField]
-        Button[] _buttonsOptionSet = new Button[0];
-        
-        [SerializeField]
-        ModuleData[] _modules = new ModuleData[0];
+        Ui_Button_Module[] _buttonsOptionSet = new Ui_Button_Module[0];
 
         #endregion
 
@@ -62,28 +59,24 @@ namespace Monti
                         }
                     });
 
-            if(_modules.Length <= _buttonsOptionSet.Length)
+            DomainList_So domainList = DomainLoader.instance.GetDomainList();
+            
+            if(domainList.Domains.Length <= _buttonsOptionSet.Length)
             {
-                for(int i = 0; i < _modules.Length; i++)
+                for(int i = 0; i < domainList.Domains.Length; i++)
                 {
-                    
+                    int index = i;
+                    if(domainList.Domains[i].ShowInMenu)
+                    {
+                        _buttonsOptionSet[i].SetButtonData(domainList.Domains[i].DisplayName, domainList.Domains[i].Enabled, domainList.Domains[i].Icon);
+                        _buttonsOptionSet[i].Button.onClick.AddListener(
+                                () =>
+                                {
+                                    DomainLoader.instance.SwitchDomain(domainList.Domains[index].ReferenceName);
+                                });   
+                    }
                 }
             }
-            
-            // int pos = 0;
-            // foreach (DomainData domain in domains.DomainList)
-            // {
-            //     if (!domain.showInMenu) continue;
-            //     GameObject DomainButton = Instantiate(openButtonPrefab);
-            //     DomainButton.transform.SetParent(buttonContent);
-            //     Button b = DomainButton.GetComponent<Button>();
-            //     b.onClick.AddListener(() =>
-            //     {
-            //         DomainLoader.instance.SwitchDomain(domain.DomainName);
-            //     });
-            //     domainButtons.Add(b);
-            //     pos++;
-            // }
             success();
         }
 

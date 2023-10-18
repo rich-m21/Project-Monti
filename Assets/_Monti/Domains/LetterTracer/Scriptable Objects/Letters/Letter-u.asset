@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8bbac3cafa63a4bb4a3e4a827f6043, type: 3}
+  m_Name: Letter-u
+  m_EditorClassIdentifier: 
+  <LetterName>k__BackingField: u
+  <Texture>k__BackingField: {fileID: 2800000, guid: 15463a9fb13c65846bb9f078d0ead2ef, type: 3}
+  <TextureMask>k__BackingField: {fileID: 2800000, guid: dec1201a6eb964949a8c4f0c586bfcf4, type: 3}

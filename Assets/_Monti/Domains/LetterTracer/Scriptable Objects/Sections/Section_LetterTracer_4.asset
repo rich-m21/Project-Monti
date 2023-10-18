@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410f80a2bfde0564aac4b2eb82559001, type: 3}
+  m_Name: Section_LetterTracer_4
+  m_EditorClassIdentifier: 
+  <DisplayName>k__BackingField: Section 4
+  <SectionIndex>k__BackingField: 3
+  <Letters>k__BackingField:
+  - {fileID: 11400000, guid: 67bba366312a0a045a66e44ff51a3fda, type: 2}
+  - {fileID: 11400000, guid: 770f9805b5d839343b159e15c782a1ff, type: 2}
+  - {fileID: 11400000, guid: cbc4c42b41b902047bebf01e1f93fe01, type: 2}
+  - {fileID: 11400000, guid: eb94c1acd9fc5a740b1d6514d6938caf, type: 2}
+  - {fileID: 11400000, guid: fd3fd0fb783185e448d8c824d0fb338f, type: 2}
+  - {fileID: 11400000, guid: 67c118c67cc31dd4b8689710f8fd3816, type: 2}
+  <Gestures>k__BackingField:
+  - {fileID: 11400000, guid: eb38ce9d82ace54468b7f4a80a8ef1fa, type: 2}
+  - {fileID: 11400000, guid: a6b96b8a29f55db4e96ebee986ec52b2, type: 2}
+  - {fileID: 11400000, guid: d208310c44cae3242bd88b8f77546379, type: 2}
+  - {fileID: 11400000, guid: 69f606b3f54aff447b5938a04d934318, type: 2}
+  - {fileID: 11400000, guid: acd7e5e98c60d7b4e9f3aa58a9a4eae5, type: 2}
+  - {fileID: 11400000, guid: 331dd3c223c61ed4e929bef9a6c6b7f5, type: 2}

@@ -8,6 +8,7 @@ namespace Monti
     public class Module_So : ScriptableObject
     {
         [field:SerializeField] public string ModuleName{ get; private set;} = "";
+        [field:SerializeField] public GameObject DomainPrefab{ get; private set; } = null;
         [field:SerializeField] public Section_So[] sections{ get; private set;} = new Section_So[0];
     }
 }

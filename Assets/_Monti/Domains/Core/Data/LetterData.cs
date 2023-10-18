@@ -9,6 +9,5 @@ namespace Monti
     {
         public string letterName;
         public Texture2D texture;
-
     }
 }

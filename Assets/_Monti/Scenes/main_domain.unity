@@ -465,7 +465,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &777555866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1505f69cef2d50c488c6aed73cab8202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  domains: {fileID: 11400000, guid: 6983497c1000c3a4db2bc930e435c68f, type: 2}
+  domains: {fileID: 11400000, guid: d581e0fb709786740b954775fd95c286, type: 2}
   currentDomain: {fileID: 0}
   loadingWheelPanel: {fileID: 1106590321}
   loadingWheel: {fileID: 1768702372}
@@ -553,7 +553,7 @@ MonoBehaviour:
   transitionSpeed: 0.25
   fade: {fileID: 1106590323}
   rotate: 0
-  rotationSpeed: 30
+  rotationSpeed: 90
 --- !u!1 &961099713
 GameObject:
   m_ObjectHideFlags: 0
