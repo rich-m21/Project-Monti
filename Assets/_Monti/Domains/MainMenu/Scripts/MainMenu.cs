@@ -72,7 +72,10 @@ namespace Monti
                         _buttonsOptionSet[i].Button.onClick.AddListener(
                                 () =>
                                 {
-                                    DomainLoader.instance.SwitchDomain(domainList.Domains[index].ReferenceName);
+                                    if(domainList.Domains[index].Enabled)
+                                    {
+                                        DomainLoader.instance.SwitchDomain(domainList.Domains[index].ReferenceName);
+                                    }
                                 });   
                     }
                 }

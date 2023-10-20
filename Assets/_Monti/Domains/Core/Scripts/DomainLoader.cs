@@ -104,7 +104,7 @@ namespace Monti
             rightPanel.anchoredPosition = rightAnchorPosition;
             float tweenDistance = -loadingWheelPanel.rect.height / 6f;
             Sequence s = DOTween.Sequence()
-            .Insert(0, leftPanel.DOAnchorPos(new Vector2(-loadingWheelPanel.rect.width / 2f, 0f), transitionSpeed))
+            .Insert(0, leftPanel.DOAnchorPos(new Vector2(-loadingWheelPanel.rect.width, 0f), transitionSpeed))
             .Insert(0, rightPanel.DOAnchorPos(new Vector2(loadingWheelPanel.rect.width, 0f), transitionSpeed))
             .Insert(0, fade.DOFade(0, transitionSpeed))
             .Insert(0, loadingWheelPanel.DOAnchorPos(new Vector2(0, tweenDistance), transitionSpeed))

@@ -1,37 +1,53 @@
 using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
-
+using XDPaint;
+using PDollarGestureRecognizer;
+        
 namespace Monti
 {
     public class LetterTracerDomain : AppDomain
     {
-        [SerializeField, BoxGroup("Module Data")] Domain_So _domain = null;
+        [SerializeField, Required, BoxGroup("Module Data")] Domain_So _domain = null;
 
-        [SerializeField] Button _goBackButton = null;
-        [SerializeField] Button _profileButton = null;
+        [SerializeField, Required] Button _goBackButton = null;
+        [SerializeField, Required] Button _profileButton = null;
 
-        [SerializeField, BoxGroup("Paint Panel")] GameObject _paintPanel = null;
-        [SerializeField, BoxGroup("Paint Panel")] Image _paintPanelImage = null;
-        [SerializeField, BoxGroup("Paint Panel")] Material _paintPanelMaterial = null;
-        
-        [SerializeField, BoxGroup("Saved Session Popup")] GameObject _savedSessionPopUp = null;
-        [SerializeField, BoxGroup("Saved Session Popup")] Button _continueButtonSession = null;
-        [SerializeField, BoxGroup("Saved Session Popup")] Button _restartButtonSession = null;
-        
-        [SerializeField, BoxGroup("Big Win Popup")] GameObject _winPopUp = null;
-        [SerializeField, BoxGroup("Big Win Popup")] Button _replayButtonWin = null;
-        [SerializeField, BoxGroup("Big Win Popup")] Button _nextButtonWin = null;
-        
-        [SerializeField, BoxGroup("Small Win Popup")] GameObject _winSmallPopUp = null;
-        [SerializeField, BoxGroup("Small Win Popup")] Button _replayButtonWinSmall = null;
-        [SerializeField, BoxGroup("Small Win Popup")] Button _nextButtonWinSmall = null;
-        
-        [SerializeField, BoxGroup("Lose Popup")] GameObject _losePopUp = null;
-        [SerializeField, BoxGroup("Lose Popup")] Button _replayButtonLose = null;
-        [SerializeField, BoxGroup("Lose Popup")] Button _mainMenuButtonLose = null;
+        [SerializeField, Required, BoxGroup("Paint Panel")] GameObject _paintPanel = null;
+        [SerializeField, Required, BoxGroup("Paint Panel")] RawImage _paintPanelImage = null;
 
+        [SerializeField, Required] GameObject _background = null;
+        
+        [SerializeField, Required, BoxGroup("Saved Session Popup")] GameObject _savedSessionPopUp = null;
+        [SerializeField, Required, BoxGroup("Saved Session Popup")] Button _continueButtonSession = null;
+        [SerializeField, Required, BoxGroup("Saved Session Popup")] Button _restartButtonSession = null;
+        
+        [SerializeField, Required, BoxGroup("Big Win Popup")] GameObject _winPopUp = null;
+        [SerializeField, Required, BoxGroup("Big Win Popup")] Button _replayButtonWin = null;
+        [SerializeField, Required, BoxGroup("Big Win Popup")] Button _nextButtonWin = null;
+        
+        [SerializeField, Required, BoxGroup("Small Win Popup")] GameObject _winSmallPopUp = null;
+        [SerializeField, Required, BoxGroup("Small Win Popup")] Button _replayButtonWinSmall = null;
+        [SerializeField, Required, BoxGroup("Small Win Popup")] Button _nextButtonWinSmall = null;
+        
+        [SerializeField, Required, BoxGroup("Lose Popup")] GameObject _losePopUp = null;
+        [SerializeField, Required, BoxGroup("Lose Popup")] Button _replayButtonLose = null;
+        [SerializeField, Required, BoxGroup("Lose Popup")] Button _mainMenuButtonLose = null;
+
+        [SerializeField, Required, BoxGroup("Red Curtain")] RectTransform _curtainObject = null;
+        [SerializeField, Required, BoxGroup("Red Curtain")] RectTransform _outPoint = null;
+        [SerializeField, Required, BoxGroup("Red Curtain")] RectTransform _inPoint = null;
+        [SerializeField, Required, BoxGroup("Red Curtain")] float _transitionSpeed = 0.0f;
+
+        [SerializeField, Required, BoxGroup("Paint Manager")] PaintManager _paintManager = null;
+
+        [SerializeField, BoxGroup("PDollar")] List<Gesture> _trainingSet = null;
+        [SerializeField, BoxGroup("PDollar")] List<Point> _points = null;
+
+        Material _paintPanelMaterial = null;
         string _painPanelMainMaterial_ID = "_MainTex";
         string _painPanelMaskMaterial_ID = "_MaskTex";
 
@@ -60,12 +76,16 @@ namespace Monti
                     () =>
                     {
                         LoadSection(PlayerPrefs.GetInt(_domain.SectionIndexPlayerPrefKey));
+                        _background.SetActive(false);
+                        _savedSessionPopUp.SetActive(false);
                     });
             
             _restartButtonSession.onClick.AddListener(
                     () =>
                     {
                         LoadSection(0);
+                        _background.SetActive(false);
+                        _savedSessionPopUp.SetActive(false);
                     });
             
             // Big Win Popup
@@ -118,6 +138,7 @@ namespace Monti
             if(_savedSection != -1)
             {
                 // Show saved session popup
+                _background.SetActive(true);
                 _savedSessionPopUp.SetActive(true);
             }
             else
@@ -142,6 +163,15 @@ namespace Monti
             _paintPanelMaterial.SetTexture(_painPanelMainMaterial_ID, letter.TextureMask);
             
             PlayerPrefs.SetInt(_domain.SectionIndexPlayerPrefKey, _currentSection);
+            
+            Sequence s = DOTween.Sequence()
+                    .Insert(0, _curtainObject.DOAnchorPos(_outPoint.anchoredPosition, _transitionSpeed))
+                    .OnComplete(() =>
+                    {
+                        // Draw Trace mode
+                    })
+                    .SetRecyclable()
+                    .Play();
         }
 
         public override void PrepareForDestroy(Action success = null, Action fail = null)
